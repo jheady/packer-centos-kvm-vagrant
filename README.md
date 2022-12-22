@@ -7,16 +7,16 @@ Things need and steps to follow:
 	* https://developer.hashicorp.com/packer/tutorials/docker-get-started/get-started-install-cli
 * Vagrant installed - If the hashicorp repo was added in the previous step, this will be as easy as installing via the repo.
 	* https://developer.hashicorp.com/vagrant/downloads
-* Download the latest centos7 image from one of the available mirrors. Also grab the sha256sum of the file. It's recommended to use the minimal ISO image.
+* Download the latest centos7 image from one of the available mirrors. Also grab the sha256sum of the file. It's recommended to use the minimal ISO image. The URL for the iso can be used in the iso_url field if desired. It was easier to download the file locally while doing multiple test builds.
 	* Mirror list - http://isoredirect.centos.org/centos/7/isos/x86_64/
 * Clone the git repository
 * Change iso_url and iso_checksum in the `centos.pkr.hcl` file as needed to match with the ones downloaded.
-* cd into the repository and run `packer init`, this will download the most recent version of the qemu plugin. An empty response implies that the plugin is already present.
-* Run `packer build centos.pkv.hcl` and wait. Alternatively, connect to the VNC port packer provides and watch the build.
+* cd into the repository and run `packer init centos.pkr.hcl`, this will download the most recent version of the qemu plugin. An empty response implies that the plugin is already present.
+* Run `packer build centos.pkr.hcl` and wait. Alternatively, connect to the VNC port packer provides and watch the build.
 
 In the repository are 3  main files for the build
 * `centos.pkr.hcl` - This file is the core packer build file.
-* `ks.cfg` - This is the kickstart file that allows packer to build the os unattended.
+* `ks.cfg` - This is the kickstart file that allows packer to build the os unattended. For a more streamlined system, or alternate environment, modify packages list as desired. Removing everything will result in just the core system being installed. Along with sudo as it's installed in the post processing steps.
 * `vagrant.rb.j2` - This is the base Vagrantfile that will be stored in the box image.
 
 The full run took about 25-30 minutes from packer build command to vagrant box ready for usage on an Intel i5-7200 laptop.
