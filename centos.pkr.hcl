@@ -16,6 +16,10 @@ variable "name" {
     default = "vagrant"
 }
 
+variable "user" {
+    default = env("USER")
+}
+
 source "qemu" "centos" {
     accelerator = "kvm"
     boot_wait = "5s"
@@ -30,7 +34,7 @@ source "qemu" "centos" {
     ssh_username = var.name
     ssh_password = var.name
     ssh_timeout = "30m"
-    iso_url = "~/isoImages/CentOS-7-x86_64-Minimal-2207-02.iso"
+    iso_url = "/home/${var.user}/isoImages/CentOS-7-x86_64-Minimal-2207-02.iso"
     iso_checksum = "sha256:d68f92f41ab008f94bd89ec4e2403920538c19a7b35b731e770ce24d66be129a"
     vm_name = var.system
     boot_command = [
